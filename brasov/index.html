@@ -480,6 +480,7 @@ DATA = SPEC.map((d,i)=>Object.assign({},d,{id:'r'+i}));
 let S = { media:null, romana:null, mate:null, judet:'R25', profil:'all', specs:new Set(), chances:new Set(), search:'', corectie:0, selected:[] };
 
 // ── POOLS ──
+function normDiac(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 function getArr(){ return MEDII_B; }
 function getN(){ return N_B; }
 
@@ -558,7 +559,7 @@ function render(){
   let rows=DATA.filter(d=>{
     if(S.profil!=='all'&&d.profil!==S.profil) return false;
     if(S.specs.size>0&&!S.specs.has(specCat(d))) return false;
-    if(S.search&&!(d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase().includes(S.search.toLowerCase())) return false;
+    if(S.search&&!normDiac((d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase()).includes(normDiac(S.search.toLowerCase()))) return false;
     return true;
   });
   if(media!=null){
@@ -585,7 +586,7 @@ function render(){
       else trendEl='<span class="trend-st" title="Prag stabil față de 2024">→±'+Math.abs(d.trend).toFixed(2)+'</span>';
     }
     const meta=SCHOOL_META[d.liceu];
-    const addrTag=meta?'<a class="addr-tag" href="https://maps.google.com/?q='+encodeURIComponent(d.liceu+', '+meta.addr+', Brașov')+'" target="_blank" rel="noopener">📍 '+meta.addr+'</a>':'';
+    const addrTag=meta?'<a class="addr-tag" href="https://maps.google.com/?q='+encodeURIComponent(d.liceu+', '+meta.addr+', România')+'" target="_blank" rel="noopener">📍 '+meta.addr+'</a>':'';
     let badge='',barEl='',diffEl='';
     if(d.ch){
       badge='<span class="badge '+d.ch.level+'">'+d.ch.label+'</span>';
@@ -631,7 +632,7 @@ function renderVerdict(){
   const vis=DATA.filter(d=>{
     if(S.profil!=='all'&&d.profil!==S.profil) return false;
     if(S.specs.size>0&&!S.specs.has(specCat(d))) return false;
-    if(S.search&&!(d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase().includes(S.search.toLowerCase())) return false;
+    if(S.search&&!normDiac((d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase()).includes(normDiac(S.search.toLowerCase()))) return false;
     return true;
   });
   const cts={green:0,amber:0,red:0};
@@ -757,7 +758,7 @@ function renderModal(){
     return '<div class="orow"><div class="onum">'+(idx+1)+'</div>'
       +'<div class="oinfo"><div class="ol">'+d.liceu+(d.cod?'<span style="font-family:\'DM Mono\',monospace;font-size:10.5px;background:#F4F4F5;color:#52525B;padding:2px 6px;border-radius:4px;margin-left:7px;font-weight:400">'+d.cod+'</span>':'')+'</div>'
       +'<div class="os">'+d.spec+' · '+yl+'</div>'
-      +(SCHOOL_META[d.liceu]?'<div style="font-size:10.5px;color:var(--ink2);margin-top:2px"><a href="https://maps.google.com/?q='+encodeURIComponent(SCHOOL_META[d.liceu].addr+', Brașov')+'" target="_blank" style="color:var(--acc);text-decoration:none">📍 '+SCHOOL_META[d.liceu].addr+'</a></div>':'')
+      +(SCHOOL_META[d.liceu]?'<div style="font-size:10.5px;color:var(--ink2);margin-top:2px"><a href="https://maps.google.com/?q='+encodeURIComponent(SCHOOL_META[d.liceu].addr+', România')+'" target="_blank" style="color:var(--acc);text-decoration:none">📍 '+SCHOOL_META[d.liceu].addr+'</a></div>':'')
       +'</div>'
       +'<div class="octrl">'
       +'<button data-act="up" data-id="'+id+'" '+(idx===0?'disabled':'')+'>↑</button>'
