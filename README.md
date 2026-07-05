@@ -1,6 +1,6 @@
 # 🎓 Simulator Admitere Liceu
 
-Un simulator interactiv pentru admiterea la liceu în București și Ilfov.
+Un simulator interactiv pentru admiterea la liceu în București și Brașov.
 
 Aplicația permite elevilor și părinților să estimeze șansele de admitere folosind media de la Evaluarea Națională și ultimele medii oficiale de admitere.
 
@@ -25,13 +25,6 @@ Aplicația permite elevilor și părinților să estimeze șansele de admitere f
 - CSS3
 - Vanilla JavaScript
 
-## Demo
-
-https://USERNAME.github.io/admitere-liceu/
-
-## Screenshot
-
-(vei adăuga o imagine aici)
 
 ---
 
