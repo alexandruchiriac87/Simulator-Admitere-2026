@@ -21,6 +21,8 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 20%,rgba(99,102,241,.22) 0%,transparent 70%);pointer-events:none}
 .hi{max-width:900px;margin:0 auto;position:relative}
 .htag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#71717A;margin-bottom:10px}
+.home-link{display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:#A5B4FC;text-decoration:none;margin-bottom:14px}
+.home-link:hover{color:#C7D2FE;text-decoration:underline}
 .hero h1{font-family:Syne,sans-serif;font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.1;margin-bottom:6px}
 .hero h1 span{color:#818CF8}
 .hero .sub{color:#A1A1AA;font-size:14px;max-width:52ch;line-height:1.55;margin-bottom:24px}
@@ -225,6 +227,7 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-
 </div>
 <header class="hero">
 <div class="hi">
+  <a class="home-link" href="../index.html">← Toate județele</a>
   <p class="htag">Simulator admitere liceu · București & Ilfov · 2026</p>
   <h1>Câte șanse ai<br>la <span>liceul dorit?</span></h1>
   <p class="sub">Compară-ți media EN 2026 cu mediile reale de admitere din 2025 pentru 362 specializări. Calculul de concurență folosește datele reale ale <strong style="color:#fff">11,242 candidați din București</strong> + <strong style="color:#fff">2,167 din Ilfov</strong>.</p>
