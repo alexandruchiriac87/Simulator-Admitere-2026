@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Simulator Admitere Liceu 2026 — Vâlcea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F0EC;--ink:#18181B;--ink2:#52525B;--panel:#FFFFFF;--border:#E4E4E7;--acc:#1D4ED8;--acc-lite:#EFF6FF;--green:#15803D;--green-bg:#F0FDF4;--amber:#B45309;--amber-bg:#FFFBEB;--red:#B91C1C;--red-bg:#FEF2F2;--bar:#F4F4F5;--r:10px;--sh:0 1px 3px rgba(0,0,0,.08),0 6px 20px rgba(0,0,0,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:80px}
+/* TOP BANNER */
+.top-banner{background:#78350F;color:#FEF3C7;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 16px;font-size:12.5px;line-height:1.45;text-align:center;flex-wrap:wrap}
+.top-banner.hide{display:none}
+.top-banner b{color:#fff}
+.tb-close{background:none;border:none;color:#FEF3C7;font-size:18px;cursor:pointer;line-height:1;padding:0 2px;flex-shrink:0;opacity:.8}
+.tb-close:hover{opacity:1}
+/* HERO */
+.hero{background:var(--ink);color:#fafafa;padding:28px 20px 32px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 20%,rgba(99,102,241,.22) 0%,transparent 70%);pointer-events:none}
+.hi{max-width:900px;margin:0 auto;position:relative}
+.htag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#71717A;margin-bottom:10px}
+.home-link{display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:#A5B4FC;text-decoration:none;margin-bottom:14px}
+.home-link:hover{color:#C7D2FE;text-decoration:underline}
+.hero h1{font-family:Syne,sans-serif;font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.1;margin-bottom:6px}
+.hero h1 span{color:#818CF8}
+.hero .sub{color:#A1A1AA;font-size:14px;max-width:52ch;line-height:1.55;margin-bottom:24px}
+/* INPUT */
+.input-zone{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end}
+.field-wrap{display:flex;flex-direction:column;gap:5px}
+.field-label{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#71717A}
+.grade-box{display:flex;align-items:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:10px;overflow:hidden;height:56px}
+.grade-box input{width:120px;height:56px;text-align:center;background:transparent;border:none;outline:none;font-family:Syne,sans-serif;font-size:32px;font-weight:700;color:#fff;-moz-appearance:textfield;caret-color:#818CF8}
+.grade-box input::-webkit-outer-spin-button,.grade-box input::-webkit-inner-spin-button{-webkit-appearance:none}
+.grade-box input::placeholder{color:#3F3F46;font-size:26px}
+.jt{display:flex;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;overflow:hidden;height:56px}
+.tie-toggle{background:none;border:none;color:#818CF8;font-size:11.5px;cursor:pointer;padding:4px 0;text-align:left;font-family:'DM Sans',sans-serif;text-decoration:underline;text-underline-offset:2px}
+.tie-toggle:hover{color:#A5B4FC}
+.tie-fields{display:none;gap:10px;margin-top:6px}
+.tie-fields.show{display:flex}
+.tie-mini{display:flex;flex-direction:column;gap:3px}
+.tie-mini span{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#71717A}
+.tie-mini input{width:64px;height:34px;text-align:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:8px;color:#fff;font-size:14px;outline:none}
+.tie-mini input:focus{border-color:#818CF8}
+.jbtn{padding:0 14px;background:transparent;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#71717A;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap;line-height:1.2;text-align:center}
+.jbtn.active{background:#1D4ED8;color:#fff}
+/* START HINT */
+.start-hint{margin-top:16px;padding:13px 15px;border-radius:8px;display:flex;align-items:center;gap:10px;background:rgba(129,140,248,.08);border:1.5px dashed rgba(129,140,248,.4);font-size:13px;line-height:1.5;color:#C7D2FE;animation:pulseHint 2.4s ease-in-out infinite}
+.start-hint b{color:#fff}
+.start-hint .arrow{font-size:16px;flex-shrink:0;animation:bounceHint 1.4s ease-in-out infinite}
+@keyframes pulseHint{0%,100%{border-color:rgba(129,140,248,.4)}50%{border-color:rgba(129,140,248,.8)}}
+@keyframes bounceHint{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+/* VERDICT */
+.verdict{margin-top:16px;padding:13px 15px;border-radius:8px;display:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.verdict.show{display:block}
+.vrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vmain{font-size:13px;color:#D4D4D8;line-height:1.55;flex:1;min-width:200px}
+.pct-bar{height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.pct-fill{height:7px;border-radius:4px;background:linear-gradient(90deg,#4ADE80,#818CF8);transition:width .4s}
+.vstats{display:flex;gap:14px;flex-wrap:wrap}
+.vs{display:flex;flex-direction:column;gap:2px}
+.vsn{font-family:Syne,sans-serif;font-size:17px;font-weight:700}
+.vsl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#71717A}
+/* POOLS */
+.pool-section{margin-top:12px;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px}
+.pool-title{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#71717A;margin-bottom:8px}
+.pool-rows{display:flex;gap:8px;flex-direction:column}
+.prow{display:flex;align-items:center;gap:8px}
+.prow-label{font-size:12px;color:#A1A1AA;width:160px;flex-shrink:0}
+.prow-bar{flex:1;height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;max-width:200px}
+.prow-fill{height:5px;border-radius:3px}
+.prow-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;width:36px;text-align:right}
+/* CONTROLS */
+.controls{max-width:900px;margin:18px auto 0;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sw{flex:1 1 200px;position:relative}
+.sw svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
+.sw input{width:100%;padding:10px 12px 10px 34px;border-radius:8px;border:1.5px solid var(--border);background:var(--panel);font-size:14px;color:var(--ink);outline:none;transition:border-color .15s}
+.sw input:focus{border-color:var(--acc)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{padding:8px 13px;border-radius:8px;border:1.5px solid var(--border);background:var(--panel);font-size:12.5px;font-weight:500;cursor:pointer;color:var(--ink2);transition:.15s;white-space:nowrap}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.active{border-color:var(--acc);background:var(--acc-lite);color:var(--acc);font-weight:600}
+.cpill{font-size:13px;color:var(--ink2);white-space:nowrap}
+.frow{display:flex;gap:7px;flex-wrap:wrap;align-items:center;max-width:900px;margin:9px auto 0;padding:0 20px}
+.flabel{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);white-space:nowrap;flex-shrink:0}
+.fdiv{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.chip.cg.active{border-color:var(--green);background:var(--green-bg);color:var(--green)}
+.chip.ca.active{border-color:var(--amber);background:var(--amber-bg);color:var(--amber)}
+.chip.cr.active{border-color:var(--red);background:var(--red-bg);color:var(--red)}
+.chance-cnt{font-family:'DM Mono',monospace;font-size:10px;opacity:.75;margin-left:3px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;flex-shrink:0;vertical-align:middle}
+/* LIST */
+.lw{max-width:900px;margin:14px auto 0;padding:0 20px}
+.empty{text-align:center;padding:44px 20px;background:var(--panel);border:1.5px dashed var(--border);border-radius:var(--r);color:var(--ink2);font-size:14px}
+.row{background:var(--panel);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:9px;display:grid;grid-template-columns:5px 1fr auto;align-items:stretch;overflow:hidden}
+.rbar{width:5px}.rbar.green{background:var(--green)}.rbar.amber{background:var(--amber)}.rbar.red{background:var(--red)}.rbar.none{background:var(--bar)}
+.rmain{padding:11px 14px;min-width:0}
+.rtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.lname{font-family:Syne,sans-serif;font-weight:700;font-size:14.5px;line-height:1.25;margin-bottom:2px}
+.sname{font-size:13px;color:var(--ink2);margin-bottom:7px}
+.cod-tag{font-family:'DM Mono',monospace;font-size:10px;background:#F4F4F5;color:#52525B;padding:2px 6px;border-radius:4px;margin-right:5px}
+.ptag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;margin-right:5px}
+.ptag.real{background:#EFF6FF;color:#1D4ED8}.ptag.uman{background:#FDF4FF;color:#7E22CE}.ptag.tehno{background:#FFF7ED;color:#C2410C}
+.addr-tag{font-size:11px;color:var(--ink2);margin-top:3px;display:inline-block;text-decoration:none;transition:color .15s}.addr-tag:hover{color:var(--acc)}
+.quick-stats{display:flex;gap:0;flex-wrap:wrap;margin-top:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden}
+.qs{flex:1;min-width:80px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(255,255,255,.1)}
+.qs:last-child{border-right:none}
+.qsn{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;line-height:1}
+.qsl{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#71717A;margin-top:2px}
+.corr-wrap{display:flex;align-items:center;gap:10px;max-width:900px;margin:8px auto 0;padding:0 20px;flex-wrap:wrap}
+.corr-label{font-size:12px;color:var(--ink2)}
+.corr-toggle{display:flex;align-items:center;gap:6px;background:var(--panel);border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;cursor:pointer;transition:.15s;font-size:12.5px;color:var(--ink2)}
+.corr-toggle.on{border-color:var(--acc);background:var(--acc-lite);color:var(--acc)}
+.corr-toggle input{margin:0}
+.trend-up{color:#15803D;font-weight:700;font-size:11px}
+.trend-dn{color:#B91C1C;font-weight:700;font-size:11px}
+.trend-st{color:#71717A;font-size:11px}
+.locuri-tag{font-family:'DM Mono',monospace;font-size:10px;background:#F4F4F5;color:#52525B;padding:2px 6px;border-radius:4px;margin-right:5px}
+.rmeta{margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cutline{font-size:12.5px;color:var(--ink2)}.cutline b{font-family:'DM Mono',monospace;color:var(--ink);font-size:13px}
+.yr24{opacity:.5;font-size:11.5px;margin-left:5px}
+.cbar{flex:1 1 100px;max-width:160px;height:4px;background:var(--bar);border-radius:2px}
+.cfill{height:4px;border-radius:2px}.cfill.green{background:var(--green)}.cfill.amber{background:var(--amber)}.cfill.red{background:var(--red)}
+.dlbl{font-family:'DM Mono',monospace;font-size:12px}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.badge.green{background:var(--green-bg);color:var(--green)}.badge.amber{background:var(--amber-bg);color:var(--amber)}.badge.red{background:var(--red-bg);color:var(--red)}
+.addbtn{width:42px;height:42px;border-radius:8px;border:1.5px solid var(--border);background:var(--panel);font-size:19px;color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.addbtn:hover{border-color:var(--acc);color:var(--acc)}.addbtn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.ract{display:flex;align-items:center;justify-content:center;padding:0 13px;border-left:1.5px solid var(--border)}
+/* STICKY */
+.sticky{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 -4px 24px rgba(0,0,0,.2);z-index:40}
+.sticky .cnt{font-size:13px}.sticky .cnt b{font-family:Syne,sans-serif;font-size:19px;color:#818CF8}
+.sbtn{background:#818CF8;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-family:Syne,sans-serif;font-weight:700;font-size:14px;cursor:pointer}
+.sbtn:disabled{opacity:.3;cursor:default}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(24,24,27,.65);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.overlay.show{display:flex}
+@media(min-width:640px){.overlay{align-items:center}}
+.modal{background:#FAFAFA;width:100%;max-width:620px;border-radius:16px 16px 0 0;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+@media(min-width:640px){.modal{border-radius:16px;max-height:84vh}}
+.mhead{padding:16px 18px 13px;border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.mhead h2{font-family:Syne,sans-serif;font-size:19px;font-weight:700}
+.mhead .xbtn{background:none;border:none;font-size:23px;cursor:pointer;color:var(--ink2);padding:4px}
+.mbody{padding:12px 18px;overflow-y:auto;flex:1}
+.mfoot{padding:12px 18px 16px;border-top:1.5px solid var(--border);display:flex;gap:9px}
+.mbtn-ghost{flex:1;background:transparent;border:1.5px solid var(--border);padding:10px;border-radius:8px;font-size:14px;cursor:pointer;color:var(--ink2)}
+.mbtn-pri{flex:2;background:var(--ink);color:#fff;border:none;padding:10px;border-radius:8px;font-family:Syne,sans-serif;font-weight:700;font-size:14px;cursor:pointer}
+.orow{display:flex;align-items:center;gap:9px;background:var(--panel);border:1.5px solid var(--border);border-radius:8px;padding:9px 11px;margin-bottom:7px}
+.onum{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0}
+.oinfo{flex:1;min-width:0}.oinfo .ol{font-family:Syne,sans-serif;font-weight:600;font-size:13.5px}.oinfo .os{font-size:11.5px;color:var(--ink2);margin-top:1px}
+.octrl{display:flex;gap:4px;flex-shrink:0}.octrl button{width:27px;height:27px;border-radius:6px;border:1.5px solid var(--border);background:var(--panel);cursor:pointer;font-size:12px;color:var(--ink2)}
+.octrl .del{color:var(--red);border-color:#FECACA}
+/* SEQUENTIAL */
+.seqbox{margin-top:16px;padding:13px 14px;background:#F8F8FC;border:1.5px solid var(--border);border-radius:10px}
+.seqtitle{font-family:Syne,sans-serif;font-weight:700;font-size:13.5px;margin-bottom:5px}
+.seqsub{font-size:11.5px;color:var(--ink2);margin-bottom:12px;line-height:1.5}
+.srow{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;margin-bottom:5px;border:1.5px solid #E4E4E7}
+.srow.best{background:#F0FDF4;border-color:#86EFAC}
+.snum{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;flex-shrink:0;color:#fff}
+.sinfo{flex:1;min-width:0}
+.slic{font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sspec{font-size:11px;color:#71717A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbar-wrap{display:flex;align-items:center;gap:5px;margin-top:4px}
+.sbar{height:4px;background:#E4E4E7;border-radius:2px;flex:1;max-width:70px;overflow:hidden}
+.sbarf{height:4px;border-radius:2px;transition:width .3s}
+.spc{font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
+.slbl{font-size:10px;color:#A1A1AA}
+.sright{text-align:right;flex-shrink:0}
+.sdiff{font-family:'DM Mono',monospace;font-size:11.5px;font-weight:600}
+.sadm{font-size:10.5px;font-weight:600;margin-top:1px}
+.seqsum{margin-top:10px;padding:9px 11px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ssum-l .ss1{font-weight:600;font-size:13px}.ssum-l .ss2{font-size:11.5px;color:#52525B;margin-top:1px}
+.ssum-r .spct{font-family:Syne,sans-serif;font-size:20px;font-weight:700}.ssum-r .slb{font-size:10.5px;color:#71717A}
+.seqnote{font-size:10px;color:#A1A1AA;margin-top:7px;line-height:1.4}
+.seqwarn{font-size:11.5px;margin-top:7px;color:var(--red)}
+/* NOTE */
+.note{max-width:900px;margin:22px auto 0;padding:0 20px}
+.note p{font-size:12px;color:var(--ink2);background:var(--panel);border:1.5px solid var(--border);border-radius:8px;padding:11px 13px;line-height:1.6}
+.warn-note{max-width:900px;margin:10px auto 0;padding:0 20px}
+.warn-note p{font-size:12px;color:var(--amber);background:var(--amber-bg);border:1.5px solid #FDE68A;border-radius:8px;padding:11px 13px;line-height:1.6}
+.site-footer{max-width:900px;margin:16px auto 0;padding:0 20px 8px;text-align:center}
+.site-footer p{font-size:11.5px;color:var(--ink2);line-height:1.6}
+.site-footer a{color:var(--acc);text-decoration:none;font-weight:600}
+.site-footer a:hover{text-decoration:underline}
+@media print{body *{visibility:hidden}.pa,.pa *{visibility:visible}.pa{position:absolute;top:0;left:0;width:100%;padding:24px}}
+/* Info & Import modals */
+.info-section{margin-bottom:18px}
+.info-section h3{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.info-section p,.info-section li{font-size:13.5px;color:var(--ink2);line-height:1.65;margin-bottom:5px}
+.info-section ul{margin-left:16px;margin-bottom:8px}
+.info-section .badge-ex{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;font-size:11.5px;font-weight:600;vertical-align:middle}
+.info-section .cal-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.info-section .cal-date{font-family:'DM Mono',monospace;font-size:12px;font-weight:600;min-width:95px;color:var(--acc)}
+.info-section .cal-ev{font-size:13px;color:var(--ink2)}
+.imp-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:16px}
+.imp-tab{padding:10px 16px;border:none;background:transparent;font-size:13.5px;font-weight:500;cursor:pointer;color:var(--ink2);border-bottom:2px solid transparent;margin-bottom:-2px;transition:.15s}
+.imp-tab.active{color:var(--acc);border-bottom-color:var(--acc);font-weight:700}
+.imp-panel{display:none}.imp-panel.show{display:block}
+.drop-zone{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:.2s;background:var(--bg);font-size:14px;color:var(--ink2)}
+.drop-zone:hover,.drop-zone.over{border-color:var(--acc);background:var(--acc-lite);color:var(--acc)}
+.drop-zone svg{margin:0 auto 10px;display:block;opacity:.4}
+.imp-result{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none}
+.imp-result.ok{background:var(--green-bg);color:var(--green);border:1px solid #86EFAC}
+.imp-result.err{background:var(--red-bg);color:var(--red);border:1px solid #FCA5A5}
+.imp-textarea{width:100%;min-height:120px;border:1.5px solid var(--border);border-radius:8px;padding:10px;font-family:'DM Mono',monospace;font-size:12px;resize:vertical;outline:none;transition:.15s}
+.imp-textarea:focus{border-color:var(--acc)}
+.imp-btn{background:var(--ink);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;width:100%}
+.pa{display:none}
+@media(max-width:600px){.frow{overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px;scrollbar-width:none}.frow::-webkit-scrollbar{display:none}.flabel{display:none}.fdiv{display:none}}
+@media(max-width:480px){
+  .input-zone{flex-direction:column;align-items:stretch;gap:12px}
+  .grade-box{width:100%}
+  .grade-box input{width:100%}
+  .jt{width:100%}
+  .jbtn{flex:1;padding:0 6px;font-size:11.5px}
+  .quick-stats{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  .quick-stats::-webkit-scrollbar{display:none}
+  .qs{min-width:68px}
+}
+</style>
+</head>
+<body>
+<div class="top-banner" id="topBanner">
+  <span class="tb-text">⚠️ Notele afișate acum sunt cele <b>înainte de contestații</b> (30 iun – 1 iul 2026). Voi actualiza aplicația cu rezultatele finale pe <b>8 iulie</b>, imediat ce apar.</span>
+  <button class="tb-close" id="tbClose" aria-label="Închide">×</button>
+</div>
+<header class="hero">
+<div class="hi">
+  <a class="home-link" href="../index.html">← Toate județele</a>
+  <p class="htag">Simulator admitere liceu · Vâlcea · 2026</p>
+  <h1>Câte șanse ai<br>la <span>liceul dorit?</span></h1>
+  <p class="sub">Compară-ți media EN 2026 cu mediile reale de admitere din 2025 pentru 103 specializări din liceele județului Vâlcea. Calculul de concurență folosește datele reale ale <strong style="color:#fff">2,468 candidați EN 2026 din Vâlcea</strong>.</p>
+  <div class="quick-stats" id="quickStats" style="display:none">
+    <div class="qs"><span class="qsn" id="qsG">—</span><span class="qsl">Șanse mari</span></div>
+    <div class="qs"><span class="qsn" id="qsA">—</span><span class="qsl">Posibil</span></div>
+    <div class="qs"><span class="qsn" id="qsR">—</span><span class="qsl">Șanse mici</span></div>
+    <div class="qs" style="border-left:1px solid rgba(255,255,255,.15);margin-left:4px;padding-left:12px"><span class="qsn" id="qsPct" style="color:#818CF8">—</span><span class="qsl">Percentilă</span></div>
+    <div class="qs"><span class="qsn" id="qsRk" style="color:#818CF8">—</span><span class="qsl">Loc în ierarhie</span></div>
+  </div>
+  <div class="input-zone">
+    <div class="field-wrap">
+      <span class="field-label">Media ta (EN 2026)</span>
+      <div class="grade-box"><input id="mIn" type="number" min="1" max="10" step="0.01" placeholder="8.50" inputmode="decimal"></div>
+    </div>
+    <div class="field-wrap">
+      <button type="button" id="tieToggle" class="tie-toggle">🎯 Notele la Română/Matematică (opțional — departajare la medii egale)</button>
+      <div class="tie-fields" id="tieFields">
+        <div class="tie-mini"><span>Română</span><input id="rIn" type="number" min="1" max="10" step="0.01" placeholder="—" inputmode="decimal"></div>
+        <div class="tie-mini"><span>Matematică</span><input id="tIn" type="number" min="1" max="10" step="0.01" placeholder="—" inputmode="decimal"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="start-hint" id="startHint"><span class="arrow">👆</span><span>Completează <b>media ta de la Evaluarea Națională</b> mai sus și vezi imediat, pentru fiecare liceu, dacă ai șanse mari, medii sau mici.</span></div>
+  <div class="verdict" id="verdict">
+    <div class="vrow">
+      <div class="vmain" id="vmain"></div>
+    </div>
+    <div class="pct-bar"><div class="pct-fill" id="pctFill" style="width:0%"></div></div>
+    <div class="vstats" id="vstats"></div>
+    <div class="pool-section" id="poolSec" style="display:none">
+      <div class="pool-title">📊 Estimare dacă X% din Ilfov candidează în București</div>
+      <div class="pool-rows" id="poolRows"></div>
+    </div>
+  </div>
+</div>
+</header>
+
+<div class="controls">
+  <div class="sw">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="sIn" type="text" placeholder="Caută liceu (ex: Lazăr, Vianu, Moisil…)">
+  </div>
+  <div class="chips" id="pChips">
+    <button class="chip active" data-p="all">Toate</button>
+    <button class="chip" data-p="Real">Real</button>
+    <button class="chip" data-p="Uman">Uman</button>
+  </div>
+  <div class="cpill" id="cPill"></div>
+  <button id="resetFilters" style="display:none;font-size:12px;padding:6px 11px;border-radius:7px;border:1.5px solid var(--border);background:var(--panel);color:var(--ink2);cursor:pointer;white-space:nowrap">✕ Resetează</button>
+</div>
+<div class="frow">
+  <span class="flabel">Specializare</span>
+  <div class="chips" id="sChips">
+    <button class="chip active" data-s="all">Toate</button>
+    <button class="chip" data-s="mat">Mat-Info</button>
+    <button class="chip" data-s="natura">Știinte Nat.</button>
+    <button class="chip" data-s="filologie">Filologie</button>
+    <button class="chip" data-s="sociale">Sci. Sociale</button>
+    <button class="chip" data-s="tehno">Tehnologic</button>
+  </div>
+</div>
+<div class="frow">
+  <span class="flabel">Șanse</span>
+  <div class="chips" id="cChips">
+    <button class="chip active" data-c="all">Toate <span class="chance-cnt" id="cntAll"></span></button>
+    <button class="chip cg" data-c="green"><span class="dot" style="background:var(--green)"></span>Mari <span class="chance-cnt" id="cntG" style="color:var(--green)"></span></button>
+    <button class="chip ca" data-c="amber"><span class="dot" style="background:var(--amber)"></span>Posibil <span class="chance-cnt" id="cntA" style="color:var(--amber)"></span></button>
+    <button class="chip cr" data-c="red"><span class="dot" style="background:var(--red)"></span>Mici <span class="chance-cnt" id="cntR" style="color:var(--red)"></span></button>
+  </div>
+</div>
+<div class="corr-wrap">
+  <span class="corr-label">Corecție 2026:</span>
+  <label class="corr-toggle" id="corrNone">
+    <input type="radio" name="corr" value="0" checked> Praguri 2025 (actual)
+  </label>
+  <label class="corr-toggle" id="corrMed">
+    <input type="radio" name="corr" value="0.07"> −0.07 (corecție moderată)
+  </label>
+  <label class="corr-toggle" id="corrMax">
+    <input type="radio" name="corr" value="0.13"> −0.13 (corecție mare)
+  </label>
+  <span class="corr-label" id="corrNote" style="color:var(--ink2);font-style:italic"></span>
+</div>
+
+<main class="lw" id="lw"></main>
+
+<div class="note">
+  <p><strong>Date:</strong> 103 specializări din liceele de stat ale județului Vâlcea. Mediile de admitere sunt din 2025 (repartizare computerizată iulie 2025), cu comparație față de 2024 unde disponibil, preluate din broșurile oficiale ISJ Vâlcea. Codurile de specializare sunt cele din broșura 2026-2027. Calculul de concurență folosește datele reale EN 2026: 2,468 candidați din județul Vâlcea.</p>
+</div>
+
+<div class="site-footer">
+  <p>Date utilizate: rezultatele oficiale ale Evaluării Naționale și ultimele medii de admitere.<br>
+  Dezvoltat de <a href="https://www.linkedin.com/in/chiriacalexandru1987/" target="_blank" rel="noopener">Alexandru Chiriac</a></p>
+</div>
+
+<div class="sticky">
+  <div class="cnt">📋 <b id="selCnt">0</b> opțiuni</div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="sbtn" id="openInfo" style="background:rgba(255,255,255,.15);font-size:13px;padding:10px 14px">ℹ️ Ghid</button>
+    <button class="sbtn" id="openImport" style="background:rgba(255,255,255,.15);font-size:13px;padding:10px 14px">📥 Date noi</button>
+    <button class="sbtn" id="openFisa" disabled>Vezi fișa de opțiuni</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="mhead"><h2>Fișa ta de opțiuni</h2><button class="xbtn" id="closeM">×</button></div>
+    <div class="mbody" id="mbody"></div>
+    <div class="mfoot">
+      <button class="mbtn-ghost" id="clearF">Golește</button>
+      <button class="mbtn-pri" id="printF">🖨 Printează / PDF</button>
+    </div>
+  </div>
+</div>
+<div class="pa" id="pa"></div>
+
+
+<!-- ── INFO MODAL ── -->
+<div class="overlay" id="infoOverlay">
+  <div class="modal" style="max-width:680px">
+    <div class="mhead">
+      <h2>📖 Ghid simulator admitere 2026</h2>
+      <button class="xbtn" id="closeInfo">×</button>
+    </div>
+    <div class="mbody">
+
+      <div class="info-section">
+        <h3>📅 Calendar admitere 2026</h3>
+        <div class="cal-row"><span class="cal-date">30 iun.</span><span class="cal-ev"><b>Rezultate preliminare EN</b> — notele tale și ale tuturor candidaților</span></div>
+        <div class="cal-row"><span class="cal-date">1–3 iul.</span><span class="cal-ev">Depunere contestații</span></div>
+        <div class="cal-row"><span class="cal-date">8 iul.</span><span class="cal-ev"><b>Rezultate finale EN</b> — notele definitive după contestații (importă-le cu butonul „Date noi")</span></div>
+        <div class="cal-row"><span class="cal-date">13–18 iul.</span><span class="cal-ev">Depunere dosare și completare fișe de opțiuni</span></div>
+        <div class="cal-row"><span class="cal-date">22 iul.</span><span class="cal-ev"><b>Repartizare computerizată</b> — aflarea liceului la care ai fost admis</span></div>
+        <div class="cal-row" style="border:none"><span class="cal-date">23–25 iul.</span><span class="cal-ev">Confirmare și înmatriculare</span></div>
+      </div>
+
+      <div class="info-section">
+        <h3>🏫 Cum funcționează repartizarea computerizată</h3>
+        <p>Sistemul procesează toți candidații <b>de la cea mai mare medie în jos</b>. Fiecare candidat este repartizat la prima opțiune disponibilă din fișa sa. Dacă locurile de la prima opțiune s-au terminat (au fost ocupate de candidați cu medii mai mari), ești trecut automat la opțiunea a doua, și așa mai departe.</p>
+        <p><b>Concluzie practică:</b> Ordinea opțiunilor contează enorm. Pune mai întâi liceele cele mai dorite, chiar dacă ai șanse mici — nu „pierzi" locul de la opțiunile inferioare dacă nu intri la cele superioare.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>🎯 Ce înseamnă culorile</h3>
+        <p>Diferența se calculează față de <b>ultima medie de admitere 2025</b> (cea mai mică medie cu care a intrat cineva în 2025):</p>
+        <ul>
+          <li><span class="badge-ex" style="background:#F0FDF4;color:#15803D">✓ Șanse mari</span> — ești cu +0.30 sau mai mult peste pragul 2025. Foarte probabil să intri.</li>
+          <li><span class="badge-ex" style="background:#FFFBEB;color:#B45309">⚡ Posibil</span> — ești între 0 și +0.30 față de prag. Zona de incertitudine — intri dacă pragul din 2026 nu crește.</li>
+          <li><span class="badge-ex" style="background:#FEF2F2;color:#B91C1C">✗ Șanse mici</span> — ești sub pragul 2025. Poți intra dacă pragul 2026 scade față de 2025 (lucru posibil în ani cu subiecte mai grele).</li>
+        </ul>
+      </div>
+
+      <div class="info-section">
+        <h3>📊 Pool de concurență</h3>
+        <p>Competitorii tăi sunt cei 2.468 de candidați reali din județul Vâlcea care au susținut Evaluarea Națională 2026.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>🔧 Corecție 2026</h3>
+        <p>Subiectele EN 2026 au fost mai dificile față de 2024. Asta poate duce la medii mai mici în general, și implicit la <b>praguri de admitere mai mici în 2026</b> față de 2025.</p>
+        <ul>
+          <li><b>−0.07 moderată</b> — estimat pentru ani cu dificultate ușor crescută</li>
+          <li><b>−0.13 mare</b> — estimat pentru ani cu subiecte semnificativ mai grele</li>
+        </ul>
+        <p>Aceasta este o <i>estimare</i>, nu o garanție. Pragurile reale se vor ști pe 22 iulie.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>↑↓ Tendința liceului</h3>
+        <p>Compară ultima medie de admitere din 2025 vs 2024:</p>
+        <ul>
+          <li><span style="color:#15803D;font-weight:700">↑+0.25</span> — pragul a crescut, liceul devine mai greu de intrat</li>
+          <li><span style="color:#B91C1C;font-weight:700">↓−0.15</span> — pragul a scăzut, liceul a devenit mai accesibil</li>
+          <li><span style="color:#71717A">→±0.02</span> — prag stabil</li>
+        </ul>
+      </div>
+
+      <div class="info-section">
+        <h3>📋 Simularea fișei secvențiale</h3>
+        <p>Când adaugi opțiuni și deschizi fișa, simularea arată <b>probabilitatea să ajungi la fiecare opțiune</b>, ținând cont de faptul că dacă ești admis la o opțiune superioară, nu mai ajungi la cele inferioare.</p>
+        <p>Probabilitățile nu sunt exacte — se bazează pe pragurile din 2025 și pot varia. Sunt utile pentru a vedea <b>care e opțiunea cea mai probabilă</b> și dacă lista ta e bine echilibrată (prea multe opțiuni riscante fără nicio opțiune de siguranță).</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── IMPORT MODAL ── -->
+<div class="overlay" id="importOverlay">
+  <div class="modal" style="max-width:600px">
+    <div class="mhead">
+      <h2>📥 Actualizează date</h2>
+      <button class="xbtn" id="closeImport">×</button>
+    </div>
+    <div class="mbody">
+      <div class="imp-tabs">
+        <button class="imp-tab active" data-tab="csv">Note EN finale (CSV)</button>
+        <button class="imp-tab" data-tab="spec">Medii admitere 2026 (JSON)</button>
+      </div>
+
+      <!-- TAB 1: CSV note EN -->
+      <div class="imp-panel show" id="tabCsv">
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:12px">
+          Importă fișierul CSV cu notele finale (după contestații, 8 iulie) pentru a actualiza distribuția de concurență. Același format ca <code>evaluare_judetul_4.csv</code> sau <code>evaluare_judetul_24.csv</code>. Coloana trebuie să se numească <b>Media</b>.
+        </p>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <button class="imp-tab active" data-pool="B" id="poolB" style="border:1.5px solid var(--acc);background:var(--acc-lite);color:var(--acc);border-radius:8px">Vâlcea (județ 40)</button>
+        </div>
+        <div class="drop-zone" id="csvDrop" onclick="document.getElementById('csvInput').click()">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Trage CSV-ul aici sau click pentru a alege
+          <div style="font-size:11.5px;margin-top:6px;opacity:.7">Acceptă: .csv (evaluare_judetul_*.csv)</div>
+        </div>
+        <input type="file" id="csvInput" accept=".csv" style="display:none">
+        <div class="imp-result" id="csvResult"></div>
+      </div>
+
+      <!-- TAB 2: JSON medii admitere -->
+      <div class="imp-panel" id="tabSpec">
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:8px">
+          Disponibil după <b>22 iulie 2026</b>, când apar rezultatele repartizării computerizate. Importă mediile reale de admitere 2026 pentru a înlocui datele din 2025 cu cele actuale. Format JSON:
+        </p>
+        <pre style="background:#F4F4F5;padding:10px;border-radius:8px;font-size:11.5px;overflow-x:auto;margin-bottom:10px">[
+  {"liceu": "COLEGIUL NAȚIONAL ...", "spec": "Matematică-informatică", "m26": 9.45},
+  ...
+]</pre>
+        <textarea class="imp-textarea" id="specJson" placeholder='[{"liceu": "...", "spec": "...", "m26": 9.45}, ...]'></textarea>
+        <button class="imp-btn" id="importSpec">Importă medii 2026</button>
+        <div class="imp-result" id="specResult"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+let SCHOOL_META, SPEC, MEDII_B, MEDII_IF, MEDII_ALL, MEDII_20, MEDII_25, N_25, N_IF25, MEDII_30, N_B, N_IF, N_ALL, N_20, N_30, N_IF20, N_IF30, DATA;
+async function loadData(){
+  const res = await fetch('date.json');
+  const d = await res.json();
+  SCHOOL_META=d.SCHOOL_META; SPEC=d.SPEC; MEDII_B=d.MEDII_B; MEDII_IF=d.MEDII_IF; MEDII_ALL=d.MEDII_ALL;
+  MEDII_20=d.MEDII_20; MEDII_25=d.MEDII_25; N_25=d.N_25; N_IF25=d.N_IF25; MEDII_30=d.MEDII_30;
+  N_B=d.N_B; N_IF=d.N_IF; N_ALL=d.N_ALL; N_20=d.N_20; N_30=d.N_30; N_IF20=d.N_IF20; N_IF30=d.N_IF30;
+}
+(async()=>{
+await loadData();
+
+
+DATA = SPEC.map((d,i)=>Object.assign({},d,{id:'r'+i}));
+
+let S = { media:null, romana:null, mate:null, judet:'R25', profil:'all', specs:new Set(), chances:new Set(), search:'', corectie:0, selected:[] };
+
+// ── POOLS ──
+function normDiac(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function getArr(){ return MEDII_B; }
+function getN(){ return N_B; }
+
+// binary search helpers (arr items are [media,romana,matematica] triples, sorted ascending by media)
+function countAbove(arr,v){ let lo=0,hi=arr.length; while(lo<hi){ const m=(lo+hi)>>1; if(arr[m][0]>v) hi=m; else lo=m+1; } return arr.length-lo; }
+function countAboveEq(arr,v){ let lo=0,hi=arr.length; while(lo<hi){ const m=(lo+hi)>>1; if(arr[m][0]>=v) hi=m; else lo=m+1; } return arr.length-lo; }
+// tie bucket: [start,end) indices of candidates with media exactly === v
+function tieBucket(arr,v){
+  let lo=0,hi=arr.length; while(lo<hi){ const m=(lo+hi)>>1; if(arr[m][0]<v) lo=m+1; else hi=m; } const start=lo;
+  lo=0;hi=arr.length; while(lo<hi){ const m=(lo+hi)>>1; if(arr[m][0]<=v) lo=m+1; else hi=m; } const end=lo;
+  return [start,end];
+}
+// Within the tied-media bucket, count how many candidates rank strictly better than (romana,mate)
+// using the official secondary/tertiary tie-break criteria (Română, apoi Matematică).
+function countBetterInBucket(arr,start,end,romana,mate){
+  let c=0;
+  for(let i=start;i<end;i++){
+    const [,r,t]=arr[i];
+    if(r>romana || (r===romana && t>mate)) c++;
+  }
+  return c;
+}
+// Full tie-aware rank info for a given media (+ optional romana/mate for exact resolution)
+function rankInfo(arr,media,romana,mate){
+  const aboveStrict=countAbove(arr,media); // strictly higher medie
+  const [bs,be]=tieBucket(arr,media);
+  const bucketSize=be-bs; // other real candidates sharing the exact same medie
+  if(bucketSize===0||romana==null||mate==null){
+    return {aboveMin:aboveStrict, aboveMax:aboveStrict+bucketSize, bucketSize, exact:bucketSize===0};
+  }
+  const better=countBetterInBucket(arr,bs,be,romana,mate);
+  return {aboveMin:aboveStrict+better, aboveMax:aboveStrict+better, bucketSize, exact:true};
+}
+
+function pctRank(media){
+  const arr=getArr(), tot=arr.length;
+  const below=tot-countAboveEq(arr,media);
+  return Math.round(below/tot*100);
+}
+
+function refM(d){ return d.m25!=null?d.m25:(d.m24!=null?d.m24:0); }
+function refY(d){ return d.m25!=null?'2025':'2024'; }
+
+function chance(media,cutoff){
+  const adj = cutoff - S.corectie;   // adjusted cutoff accounting for 2026 correction
+  const diff=+(media-adj).toFixed(2);
+  if(diff>=0.30) return {level:'green',label:'Șanse mari',diff};
+  if(diff>=0)    return {level:'amber',label:'Posibil',diff};
+  return {level:'red',label:'Șanse mici',diff};
+}
+function fmtD(diff){ return (diff>0?'+':'')+diff.toFixed(2); }
+function specCat(d){
+  const sl=(d.spec_full||d.spec).toLowerCase();
+  if(sl.includes('matematică')||sl.includes('matematica')||sl.includes('informatică')||sl.includes('informatica')) return 'mat';
+  if(sl.includes('naturii')) return 'natura';
+  if(sl.includes('filologie')) return 'filologie';
+  if(sl.includes('sociale')) return 'sociale';
+  return 'tehno';
+}
+
+function yearsLine(d){
+  if(d.m25!=null&&d.m24!=null) return 'ultima medie: <b>'+d.m25.toFixed(2)+'</b><span class="yr24">(2024: '+d.m24.toFixed(2)+')</span>';
+  if(d.m25!=null) return 'ultima medie 2025: <b>'+d.m25.toFixed(2)+'</b>';
+  if(d.m24!=null) return 'ultima medie 2024: <b>'+d.m24.toFixed(2)+'</b>';
+  return '<span style="color:var(--ink2);font-style:italic">fără medie publicată</span>';
+}
+
+// ── RENDER LIST ──
+function render(){
+  const media=S.media;
+  // Show/hide reset button
+  const hasFilter=S.profil!=='all'||S.specs.size>0||S.chances.size>0||S.search.length>0;
+  const rb=document.getElementById('resetFilters');
+  if(rb) rb.style.display=hasFilter?'':'none';
+
+  let rows=DATA.filter(d=>{
+    if(S.profil!=='all'&&d.profil!==S.profil) return false;
+    if(S.specs.size>0&&!S.specs.has(specCat(d))) return false;
+    if(S.search&&!normDiac((d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase()).includes(normDiac(S.search.toLowerCase()))) return false;
+    return true;
+  });
+  if(media!=null){
+    rows=rows.map(d=>Object.assign({},d,{ch:chance(media,refM(d))}));
+    if(S.chances.size>0) rows=rows.filter(d=>S.chances.has(d.ch.level));
+    const ord={green:0,amber:1,red:2};
+    rows.sort((a,b)=>ord[a.ch.level]-ord[b.ch.level]||refM(b)-refM(a));
+  } else rows.sort((a,b)=>refM(b)-refM(a)||a.liceu.localeCompare(b.liceu,'ro'));
+
+  document.getElementById('cPill').textContent=rows.length+' specializări';
+
+  const lw=document.getElementById('lw');
+  if(!rows.length){ lw.innerHTML='<div class="empty">Niciun rezultat. Elimină filtrele.</div>'; renderVerdict(); return; }
+
+  lw.innerHTML=rows.map(d=>{
+    const sel=S.selected.includes(d.id);
+    const ptag=d.profil==='Real'?'<span class="ptag real">Real</span>':d.profil==='Uman'?'<span class="ptag uman">Uman</span>':'<span class="ptag tehno">Tehno</span>';
+    const codTag=d.cod?'<span class="cod-tag">'+d.cod+'</span>':'';
+    const locuriTag=d.locuri?'<span class="locuri-tag">'+d.locuri+' locuri</span>':'';
+    let trendEl='';
+    if(d.trend!=null){
+      if(d.trend>0.05) trendEl='<span class="trend-up" title="Prag în creștere față de 2024">↑+'+d.trend.toFixed(2)+'</span>';
+      else if(d.trend<-0.05) trendEl='<span class="trend-dn" title="Prag în scădere față de 2024">↓'+d.trend.toFixed(2)+'</span>';
+      else trendEl='<span class="trend-st" title="Prag stabil față de 2024">→±'+Math.abs(d.trend).toFixed(2)+'</span>';
+    }
+    const meta=SCHOOL_META[d.liceu];
+    const addrTag=meta?'<a class="addr-tag" href="https://maps.google.com/?q='+encodeURIComponent(d.liceu+', '+meta.addr+', România')+'" target="_blank" rel="noopener">📍 '+meta.addr+'</a>':'';
+    let badge='',barEl='',diffEl='';
+    if(d.ch){
+      badge='<span class="badge '+d.ch.level+'">'+d.ch.label+'</span>';
+      const fp=Math.min(100,Math.max(0,(1-Math.abs(d.ch.diff)/1.5)*100));
+      barEl='<div class="cbar"><div class="cfill '+d.ch.level+'" style="width:'+fp+'%"></div></div>';
+      const dc=d.ch.level==='green'?'var(--green)':d.ch.level==='amber'?'var(--amber)':'var(--red)';
+      diffEl='<span class="dlbl" style="color:'+dc+'">'+fmtD(d.ch.diff)+'</span>';
+    }
+    return '<div class="row"><div class="rbar '+(d.ch?d.ch.level:'none')+'"></div>'
+      +'<div class="rmain"><div class="rtop"><div>'
+      +'<div class="lname">'+d.liceu+'</div><div class="sname">'+d.spec+'</div>'
+      +codTag+locuriTag+ptag+trendEl
+      +(addrTag?'<br>'+addrTag:'')
+      +'</div>'+badge+'</div>'
+      +'<div class="rmeta"><div class="cutline">'+yearsLine(d)+'</div>'+barEl+diffEl+'</div></div>'
+      +'<div class="ract"><button class="addbtn'+(sel?' on':'')
+      +'" data-id="'+d.id+'">'+(sel?'✓':'+')+'</button></div></div>';
+  }).join('');
+
+  lw.querySelectorAll('.addbtn').forEach(b=>b.addEventListener('click',()=>toggleSel(b.dataset.id)));
+  renderVerdict();
+}
+
+// ── VERDICT ──
+function renderVerdict(){
+  const v=document.getElementById('verdict');
+  const hint=document.getElementById('startHint');
+  if(S.media==null){
+    v.classList.remove('show');
+    if(hint) hint.style.display='flex';
+    ['cntAll','cntG','cntA','cntR'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='';});
+    const qsel=document.getElementById('quickStats');if(qsel)qsel.style.display='none';
+    return;
+  }
+  if(hint) hint.style.display='none';
+  const media=S.media, arr=getArr(), tot=arr.length;
+  const pct=pctRank(media);
+  const ri=rankInfo(arr,media,S.romana,S.mate);
+  const above=ri.aboveMin; // people with strictly higher medie
+  const below=tot-countAboveEq(arr,media); // people with strictly lower medie (unaffected by ties)
+  const jLabel='Vâlcea';
+
+  const vis=DATA.filter(d=>{
+    if(S.profil!=='all'&&d.profil!==S.profil) return false;
+    if(S.specs.size>0&&!S.specs.has(specCat(d))) return false;
+    if(S.search&&!normDiac((d.liceu+' '+d.spec+' '+(d.spec_full||'')).toLowerCase()).includes(normDiac(S.search.toLowerCase()))) return false;
+    return true;
+  });
+  const cts={green:0,amber:0,red:0};
+  vis.forEach(d=>cts[chance(media,refM(d)).level]++);
+
+  const tieNote = ri.bucketSize>0
+    ? (ri.exact
+        ? ' <span style="color:#A5B4FC">(din care '+ri.bucketSize+' au exact media ta — poziția e calculată după Română/Matematică)</span>'
+        : ' <span style="color:#A5B4FC">(+ '+ri.bucketSize+' candidați au exact aceeași medie ca tine — poziția exactă printre ei depinde de notele la Română/Matematică)</span>')
+    : '';
+  document.getElementById('vmain').innerHTML=
+    'Media <b style="color:#fff;font-family:Syne,sans-serif">'+media.toFixed(2)+'</b> — '
+    +'tu ești mai bun decât <b style="color:#fff">'+pct+'%</b> din candidații din '+jLabel
+    +' (<span style="color:#FCA5A5">'+above+' au medii mai mari</span>, <span style="color:#86EFAC">'+below+' au medii mai mici</span>).'+tieNote;
+
+  document.getElementById('pctFill').style.width=pct+'%';
+
+  document.getElementById('vstats').innerHTML=
+    '<div class="vs"><span class="vsn" style="color:#4ADE80">'+cts.green+'</span><span class="vsl">Șanse mari</span></div>'
+    +'<div class="vs"><span class="vsn" style="color:#FCD34D">'+cts.amber+'</span><span class="vsl">Posibil</span></div>'
+    +'<div class="vs"><span class="vsn" style="color:#FCA5A5">'+cts.red+'</span><span class="vsl">Șanse mici</span></div>'
+    +'<div class="vs"><span class="vsn" style="color:#fff">'+vis.length+'</span><span class="vsl">Total afișate</span></div>';
+  // Update chance filter counters
+  const total = cts.green+cts.amber+cts.red;
+  const setC = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v>0?'('+v+')':''; };
+  setC('cntAll', total); setC('cntG', cts.green); setC('cntA', cts.amber); setC('cntR', cts.red);
+  // Quick-stats in hero
+  const qs=document.getElementById('quickStats');
+  if(qs){
+    qs.style.display='flex';
+    document.getElementById('qsG').textContent=cts.green;
+    document.getElementById('qsA').textContent=cts.amber;
+    document.getElementById('qsR').textContent=cts.red;
+    document.getElementById('qsPct').textContent=pct+'%';
+    const rkEl=document.getElementById('qsRk');
+    if(ri.exact){
+      rkEl.textContent='#'+(ri.aboveMin+1).toLocaleString('ro-RO');
+    } else {
+      rkEl.textContent='#'+(ri.aboveMin+1).toLocaleString('ro-RO')+'–'+(ri.aboveMax+1).toLocaleString('ro-RO');
+    }
+  }
+
+  const poolSec=document.getElementById('poolSec');
+  if(poolSec) poolSec.style.display='none';
+
+
+  v.classList.add('show');
+}
+
+// ── SEQUENTIAL ──
+function diffToProb(diff){
+  if(diff>=0.60) return 0.93; if(diff>=0.45) return 0.85;
+  if(diff>=0.30) return 0.75; if(diff>=0.15) return 0.58;
+  if(diff>=0.05) return 0.42; if(diff>=0.00) return 0.28;
+  if(diff>=-0.05) return 0.18; if(diff>=-0.10) return 0.12;
+  if(diff>=-0.20) return 0.07; if(diff>=-0.35) return 0.04;
+  return 0.02;
+}
+function bC(p){ return p>=0.65?'#16a34a':p>=0.35?'#b45309':'#b91c1c'; }
+function bW(p){ return Math.min(100,Math.max(2,Math.round(p*100)))+'%'; }
+function pF(p){ return Math.round(p*100)+'%'; }
+
+function renderSeq(){
+  if(!S.selected.length||S.media==null) return '';
+  const rows=S.selected.map(id=>{
+    const d=DATA.find(x=>x.id===id);
+    const cutoff=refM(d);
+    const diff=+(S.media-(cutoff-S.corectie)).toFixed(2);
+    const pA=diffToProb(diff);
+    return {d,cutoff,diff,pA};
+  });
+  let pNL=1.0;
+  const seq=rows.map((r,i)=>{
+    const pL=pNL*r.pA; pNL*=(1-r.pA);
+    return Object.assign({},r,{pL,pNL});
+  });
+  const pAdm=1-seq[seq.length-1].pNL;
+  const bestI=seq.reduce((bi,r,i)=>r.pL>seq[bi].pL?i:bi,0);
+  const best=seq[bestI];
+
+  const rowsHtml=seq.map((r,i)=>{
+    const isBest=i===bestI;
+    const dc=r.diff>=0.30?'#16a34a':r.diff>=0?'#b45309':'#b91c1c';
+    const ds=r.diff>=0?'+':'';
+    return '<div class="srow'+(isBest?' best':'')+'">'
+      +'<div class="snum" style="background:'+(isBest?'#16a34a':'#3f3f46')+'">'+( i+1)+'</div>'
+      +'<div class="sinfo"><div class="slic">'+r.d.liceu+'</div><div class="sspec">'+r.d.spec+'</div>'
+      +'<div class="sbar-wrap">'
+      +'<div class="sbar"><div class="sbarf" style="width:'+bW(r.pL)+';background:'+bC(r.pL)+'"></div></div>'
+      +'<span class="spc" style="color:'+bC(r.pL)+'">'+pF(r.pL)+'</span>'
+      +'<span class="slbl">să ajungi aici</span></div></div>'
+      +'<div class="sright">'
+      +'<div class="sdiff" style="color:'+dc+'">'+ds+r.diff.toFixed(2)+'</div>'
+      +'<div class="sadm" style="color:'+bC(r.pA)+'">'+pF(r.pA)+' intri</div>'
+      +'</div></div>';
+  }).join('');
+
+  const sumBg=pAdm>=0.80?'background:#F0FDF4;border-color:#86EFAC':pAdm>=0.50?'background:#FFFBEB;border-color:#FCD34D':'background:#FEF2F2;border-color:#FCA5A5';
+  const warnHtml=pAdm<0.60?'<div class="seqwarn">⚠️ Lista ta are multe opțiuni sub pragul tău. Adaugă și licee cu praguri mai mici!</div>':'';
+
+  return '<div class="seqbox">'
+    +'<div class="seqtitle">📊 Simulare fișă secvențială</div>'
+    +'<div class="seqsub">Sistemul de repartizare computerizată plasează elevii de sus în jos după medie. Dacă locurile de la opțiunea 1 se iau de cei cu note mai mari, ești plasat la opțiunea 2, etc. Probabilitățile de mai jos simulează acest proces.</div>'
+    +rowsHtml
+    +'<div class="seqsum" style="'+sumBg+';border:1.5px solid;padding:9px 11px;border-radius:8px">'
+    +'<div class="ssum-l"><div class="ss1">Cel mai probabil ajungi la opțiunea #'+(bestI+1)+'</div>'
+    +'<div class="ss2">'+best.d.liceu+' — '+best.d.spec+'</div></div>'
+    +'<div class="ssum-r"><div class="spct" style="color:'+bC(pAdm)+'">'+pF(pAdm)+'</div>'
+    +'<div class="slb">șanse să fii<br>admis undeva</div></div>'
+    +'</div>'
+    +warnHtml
+    +'<div class="seqnote">* Probabilitățile se bazează pe mediile din 2025 și distribuția EN 2026. Pragurile reale pot varia ±0.05–0.15 față de 2025. Aceasta este o estimare, nu o garanție.</div>'
+    +'</div>';
+}
+
+// ── MODAL ──
+function renderModal(){
+  const body=document.getElementById('mbody');
+  if(!S.selected.length){ body.innerHTML='<div style="text-align:center;padding:32px;color:var(--ink2);font-size:14px">Nicio opțiune adăugată. Apasă + lângă o specializare.</div>'; return; }
+  const listHtml=S.selected.map((id,idx)=>{
+    const d=DATA.find(x=>x.id===id);
+    const yl=yearsLine(d).replace(/<[^>]+>/g,'');
+    return '<div class="orow"><div class="onum">'+(idx+1)+'</div>'
+      +'<div class="oinfo"><div class="ol">'+d.liceu+(d.cod?'<span style="font-family:\'DM Mono\',monospace;font-size:10.5px;background:#F4F4F5;color:#52525B;padding:2px 6px;border-radius:4px;margin-left:7px;font-weight:400">'+d.cod+'</span>':'')+'</div>'
+      +'<div class="os">'+d.spec+' · '+yl+'</div>'
+      +(SCHOOL_META[d.liceu]?'<div style="font-size:10.5px;color:var(--ink2);margin-top:2px"><a href="https://maps.google.com/?q='+encodeURIComponent(SCHOOL_META[d.liceu].addr+', România')+'" target="_blank" style="color:var(--acc);text-decoration:none">📍 '+SCHOOL_META[d.liceu].addr+'</a></div>':'')
+      +'</div>'
+      +'<div class="octrl">'
+      +'<button data-act="up" data-id="'+id+'" '+(idx===0?'disabled':'')+'>↑</button>'
+      +'<button data-act="down" data-id="'+id+'" '+(idx===S.selected.length-1?'disabled':'')+'>↓</button>'
+      +'<button class="del" data-act="del" data-id="'+id+'">✕</button>'
+      +'</div></div>';
+  }).join('');
+  body.innerHTML=listHtml+renderSeq();
+  body.querySelectorAll('button[data-act]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id=btn.dataset.id,i=S.selected.indexOf(id),act=btn.dataset.act;
+      if(act==='up'&&i>0)[S.selected[i-1],S.selected[i]]=[S.selected[i],S.selected[i-1]];
+      if(act==='down'&&i<S.selected.length-1)[S.selected[i+1],S.selected[i]]=[S.selected[i],S.selected[i+1]];
+      if(act==='del') S.selected.splice(i,1);
+      document.getElementById('selCnt').textContent=S.selected.length;
+      document.getElementById('openFisa').disabled=!S.selected.length;
+      renderModal(); render();
+    });
+  });
+}
+
+// ── TOGGLE ──
+function toggleSel(id){
+  const i=S.selected.indexOf(id);
+  if(i>-1) S.selected.splice(i,1); else S.selected.push(id);
+  document.getElementById('selCnt').textContent=S.selected.length;
+  document.getElementById('openFisa').disabled=!S.selected.length;
+  render();
+}
+
+// ── EVENTS ──
+document.getElementById('mIn').addEventListener('input',e=>{
+  const v=parseFloat(e.target.value.replace(',','.'));
+  S.media=isNaN(v)?null:Math.min(10,Math.max(1,v)); render();
+});
+document.getElementById('rIn').addEventListener('input',e=>{
+  const v=parseFloat(e.target.value.replace(',','.'));
+  S.romana=isNaN(v)?null:Math.min(10,Math.max(1,v)); render();
+});
+document.getElementById('tIn').addEventListener('input',e=>{
+  const v=parseFloat(e.target.value.replace(',','.'));
+  S.mate=isNaN(v)?null:Math.min(10,Math.max(1,v)); render();
+});
+document.getElementById('tieToggle').addEventListener('click',()=>{
+  document.getElementById('tieFields').classList.toggle('show');
+});
+document.getElementById('tbClose').addEventListener('click',()=>{
+  document.getElementById('topBanner').classList.add('hide');
+});
+document.querySelectorAll('.jbtn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.jbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); S.judet=b.dataset.j; render();
+}));
+// Corecție 2026 radio buttons
+document.querySelectorAll('.corr-wrap input[type=radio]').forEach(inp=>{
+  inp.addEventListener('change',()=>{
+    S.corectie=parseFloat(inp.value);
+    document.querySelectorAll('.corr-toggle').forEach(l=>l.classList.remove('on'));
+    inp.closest('.corr-toggle').classList.add('on');
+    const note=document.getElementById('corrNote');
+    if(S.corectie===0) note.textContent='';
+    else note.textContent='Pragurile 2025 sunt reduse cu '+S.corectie.toFixed(2)+' pts pentru estimarea 2026';
+    render();
+  });
+});
+// Set first radio as active on load
+document.querySelector('.corr-toggle').classList.add('on');
+document.getElementById('pChips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  document.querySelectorAll('#pChips .chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active'); S.profil=c.dataset.p; render();
+});
+document.getElementById('sChips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  const v=c.dataset.s;
+  if(v==='all'){ S.specs.clear(); }
+  else{ if(S.specs.has(v)) S.specs.delete(v); else S.specs.add(v); }
+  document.querySelectorAll('#sChips .chip').forEach(x=>{
+    const xv=x.dataset.s;
+    x.classList.toggle('active', xv==='all'?S.specs.size===0:S.specs.has(xv));
+  });
+  render();
+});
+document.getElementById('cChips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  const v=c.dataset.c;
+  if(v==='all'){ S.chances.clear(); }
+  else{ if(S.chances.has(v)) S.chances.delete(v); else S.chances.add(v); }
+  document.querySelectorAll('#cChips .chip').forEach(x=>{
+    const xv=x.dataset.c;
+    x.classList.toggle('active', xv==='all'?S.chances.size===0:S.chances.has(xv));
+  });
+  render();
+});
+document.getElementById('sIn').addEventListener('input',e=>{ S.search=e.target.value; render(); });
+document.getElementById('resetFilters').addEventListener('click',()=>{
+  S.profil='all'; S.specs=new Set(); S.chances=new Set(); S.search='';
+  document.getElementById('sIn').value='';
+  document.querySelectorAll('#pChips .chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  document.querySelectorAll('#sChips .chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  document.querySelectorAll('#cChips .chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  render();
+});
+document.getElementById('openFisa').addEventListener('click',()=>{ renderModal(); document.getElementById('overlay').classList.add('show'); });
+document.getElementById('closeM').addEventListener('click',()=>document.getElementById('overlay').classList.remove('show'));
+document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') document.getElementById('overlay').classList.remove('show'); });
+document.getElementById('clearF').addEventListener('click',()=>{
+  S.selected=[]; document.getElementById('selCnt').textContent=0; document.getElementById('openFisa').disabled=true;
+  renderModal(); render();
+});
+document.getElementById('printF').addEventListener('click',()=>{
+  const pa=document.getElementById('pa');
+  pa.innerHTML='<h1 style="font-family:Georgia">Fișa de opțiuni – Admitere Liceu 2026</h1>'
+    +'<p>Media: <b>'+(S.media?.toFixed(2)||'—')+'</b> · Generat: '+new Date().toLocaleDateString('ro-RO')+'</p>'
+    +'<ol style="font-family:sans-serif;font-size:14px;line-height:1.9;margin-top:8px">'
+    +S.selected.map(id=>{
+      const d=DATA.find(x=>x.id===id);
+      return '<li><b>'+d.liceu+'</b> — '+d.spec+(d.cod?' (cod: '+d.cod+')':'')+' · '+(d.m25!=null?'medie 2025: '+d.m25.toFixed(2):'medie 2024: '+d.m24.toFixed(2));
+    }).join('')
+    +'</ol>';
+  window.print();
+});
+
+// ── INFO MODAL ──
+document.getElementById('openInfo').addEventListener('click',()=>document.getElementById('infoOverlay').classList.add('show'));
+document.getElementById('closeInfo').addEventListener('click',()=>document.getElementById('infoOverlay').classList.remove('show'));
+document.getElementById('infoOverlay').addEventListener('click',e=>{if(e.target.id==='infoOverlay')document.getElementById('infoOverlay').classList.remove('show');});
+
+// ── IMPORT MODAL ──
+document.getElementById('openImport').addEventListener('click',()=>document.getElementById('importOverlay').classList.add('show'));
+document.getElementById('closeImport').addEventListener('click',()=>document.getElementById('importOverlay').classList.remove('show'));
+document.getElementById('importOverlay').addEventListener('click',e=>{if(e.target.id==='importOverlay')document.getElementById('importOverlay').classList.remove('show');});
+
+// Import tabs
+document.querySelectorAll('.imp-tab[data-tab]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.imp-tab[data-tab]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.imp-panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById('tab'+btn.dataset.tab.charAt(0).toUpperCase()+btn.dataset.tab.slice(1)).classList.add('show');
+  });
+});
+
+// Pool selector for CSV import
+let importPool='B';
+
+// CSV parse & import
+function parseCSVGrades(text){
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  if(!lines.length) return null;
+  const header=lines[0].split(/[,;]/).map(h=>h.trim().replace(/^["']|["']$/g,''));
+  const hl=header.map(h=>h.toLowerCase());
+  const medIdx=hl.findIndex(h=>h==='media'||h.includes('medie'));
+  if(medIdx<0) return {error:'Coloana "Media" nu a fost găsită. Coloane detectate: '+header.join(', ')};
+  // optional tie-break columns (Ro Nota / Ro Final, Mate Nota / Mate Final) — same format as evaluare_judetul_X.csv
+  const roFinalIdx=hl.findIndex(h=>h==='ro final');
+  const roNotaIdx=hl.findIndex(h=>h==='ro nota');
+  const mateFinalIdx=hl.findIndex(h=>h==='mate final');
+  const mateNotaIdx=hl.findIndex(h=>h==='mate nota');
+  const pick=(cols,finalIdx,notaIdx)=>{
+    if(finalIdx>=0){ const fv=(cols[finalIdx]||'').trim().replace(',','.'); if(fv&&fv!=='-'){ const n=parseFloat(fv); if(!isNaN(n)) return n; } }
+    if(notaIdx>=0){ const nv=(cols[notaIdx]||'').trim().replace(',','.'); if(nv&&nv!=='-'){ const n=parseFloat(nv); if(!isNaN(n)) return n; } }
+    return 0;
+  };
+  const grades=[];
+  for(let i=1;i<lines.length;i++){
+    const cols=lines[i].split(/[,;]/);
+    const raw=(cols[medIdx]||'').trim().replace(/^["']|["']$/g,'').replace(',','.');
+    const v=parseFloat(raw);
+    if(!isNaN(v)&&v>=1&&v<=10){
+      const r=pick(cols,roFinalIdx,roNotaIdx);
+      const t=pick(cols,mateFinalIdx,mateNotaIdx);
+      grades.push([v,r,t]);
+    }
+  }
+  return grades.length>0?grades.sort((a,b)=>a[0]-b[0]):{error:'Nu s-au găsit medii valide (1.00–10.00). Verifică formatul fișierului.'};
+}
+
+function processCSV(text){
+  const res=parseCSVGrades(text);
+  const el=document.getElementById('csvResult');
+  el.style.display='block';
+  if(!res){el.className='imp-result err';el.textContent='Fișier gol sau invalid.';return;}
+  if(res.error){el.className='imp-result err';el.textContent='❌ '+res.error;return;}
+  MEDII_B.length=0; res.forEach(v=>MEDII_B.push(v));
+  MEDII_IF.length=0; res.forEach(v=>MEDII_IF.push(v));
+  MEDII_ALL.length=0; res.forEach(v=>MEDII_ALL.push(v));
+  MEDII_20.length=0; res.forEach(v=>MEDII_20.push(v));
+  MEDII_25.length=0; res.forEach(v=>MEDII_25.push(v));
+  MEDII_30.length=0; res.forEach(v=>MEDII_30.push(v));
+  N_B=N_IF=N_ALL=N_20=N_25=N_30=res.length;
+  el.className='imp-result ok';
+  el.textContent='✅ Vâlcea actualizat: '+res.length+' medii valide importate. Datele au fost recalculate.';
+  render();
+}
+
+// Drag and drop + file input
+const drop=document.getElementById('csvDrop');
+drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over');});
+drop.addEventListener('dragleave',()=>drop.classList.remove('over'));
+drop.addEventListener('drop',e=>{
+  e.preventDefault();drop.classList.remove('over');
+  const f=e.dataTransfer.files[0];
+  if(!f||!f.name.endsWith('.csv')){document.getElementById('csvResult').style.display='block';document.getElementById('csvResult').className='imp-result err';document.getElementById('csvResult').textContent='❌ Alege un fișier .csv';return;}
+  const r=new FileReader();r.onload=ev=>processCSV(ev.target.result);r.readAsText(f,'utf-8');
+});
+document.getElementById('csvInput').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>processCSV(ev.target.result);r.readAsText(f,'utf-8');
+});
+
+// JSON spec import (medii admitere 2026)
+document.getElementById('importSpec').addEventListener('click',()=>{
+  const raw=document.getElementById('specJson').value.trim();
+  const el=document.getElementById('specResult');
+  el.style.display='block';
+  if(!raw){el.className='imp-result err';el.textContent='❌ Câmpul JSON este gol.';return;}
+  let arr;
+  try{arr=JSON.parse(raw);}catch(e){el.className='imp-result err';el.textContent='❌ JSON invalid: '+e.message;return;}
+  if(!Array.isArray(arr)||!arr.length){el.className='imp-result err';el.textContent='❌ Array gol sau format incorect.';return;}
+  let updated=0;
+  arr.forEach(entry=>{
+    if(!entry.liceu||!entry.spec||entry.m26==null) return;
+    const liceuN=entry.liceu.trim();
+    const specN=entry.spec.trim();
+    const d=DATA.find(r=>r.liceu===liceuN&&r.spec===specN);
+    if(d){d.m25=+entry.m26;d.m24=d.m25;updated++;} // update m25 to the new 2026 value
+  });
+  if(updated===0){el.className='imp-result err';el.textContent='❌ Nicio specializare potrivită. Verifică că numele liceelor și specializările corespund exact.';return;}
+  el.className='imp-result ok';
+  el.textContent='✅ Actualizate '+updated+' din '+arr.length+' specializări cu medii reale 2026.';
+  render();
+});
+
+render();
+
+})();
+</script>
+
+</body>
+</html>
